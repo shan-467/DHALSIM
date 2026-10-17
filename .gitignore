@@ -1,0 +1,8 @@
+node_modules/
+dist/
+
+# Local Claude Code / desktop app config
+.claude/
+
+# Rendered showcase films exceed GitHub's 100 MB per-file limit
+showcase/*.mp4

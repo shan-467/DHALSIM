@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Street Fighter: DHAILSM</title>
+  <meta name="description" content="An interactive Street Fighter experience starring DHAILSM, built from the film posters and game cinematics." />
+  <meta name="theme-color" content="#000000" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23000'/%3E%3Cpath d='M8 40 L56 20 L56 30 L8 50Z' fill='%23d8131b'/%3E%3Ccircle cx='32' cy='22' r='9' fill='%23d6a23c'/%3E%3C/svg%3E" />
+  <link rel="preload" as="image" href="/media/poster/intro.jpg" />
+</head>
+<body class="is-locked">
+  <a class="skip-link" href="#dhailsm">Skip to <span data-hero-name>DHAILSM</span></a>
+
+  <!-- ─────────────── Title screen ─────────────── -->
+  <div class="start" id="start" role="dialog" aria-modal="true" aria-labelledby="start-title">
+    <img class="start__brush" src="/media/texture/brush-red.png" alt="" width="1800" height="360" />
+    <h1 class="start__title" id="start-title">
+      <span class="start__line start__line--top">Street</span>
+      <span class="start__line start__line--bottom">Fighter</span>
+    </h1>
+    <div class="start__panel">
+      <button class="start__press" id="press-start" type="button" disabled>Press start</button>
+      <div class="start__load" aria-hidden="true"><span class="start__load-bar"></span></div>
+      <p class="start__status" id="start-status" aria-live="polite">Loading the opening</p>
+      <button class="sound-toggle start__sound" type="button" aria-pressed="true" data-sound-toggle>
+        <span class="sound-toggle__icon" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+        <span class="sound-toggle__label">Sound on</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ─────────────── Persistent chrome ─────────────── -->
+  <header class="topbar" id="topbar">
+    <button class="topbar__mark" type="button" data-scroll-to="round-one" aria-label="Back to the opening">
+      Street Fighter
+    </button>
+    <div class="topbar__actions">
+      <button class="sound-toggle" type="button" aria-pressed="true" data-sound-toggle>
+        <span class="sound-toggle__icon" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+        <span class="sound-toggle__label">Sound on</span>
+      </button>
+      <button class="topbar__menu" type="button" aria-expanded="false" aria-controls="menu" id="menu-button">
+        <span class="topbar__menu-lines" aria-hidden="true"><i></i><i></i></span>
+        <span class="topbar__menu-label">Menu</span>
+      </button>
+    </div>
+  </header>
+
+  <nav class="menu" id="menu" aria-label="Sections" hidden>
+    <img class="menu__brush" src="/media/texture/brush-red.png" alt="" width="1800" height="360" />
+    <ol class="menu__list" id="menu-list"></ol>
+    <button class="menu__replay" type="button" data-action="replay">Replay the opening</button>
+  </nav>
+
+  <div class="meter" id="meter" aria-hidden="true">
+    <span class="meter__label" id="meter-label">Round one</span>
+    <span class="meter__track" id="meter-track"></span>
+  </div>
+
+  <main id="main">
+
+    <!-- ─────────────── 1 · Opening / ROUND ONE ─────────────── -->
+    <section class="intro" id="round-one" aria-label="Opening">
+      <div class="intro__frame">
+        <video class="intro__video" id="intro-video" playsinline muted preload="auto"
+               poster="/media/poster/intro.jpg" data-video="intro"
+               aria-label="Player select screen landing on DHAILSM, then a cut to DHAILSM in a neon-lit club"></video>
+        <div class="intro__flash" aria-hidden="true"></div>
+      </div>
+
+      <div class="intro__hud" aria-hidden="true">
+        <div class="lifebar lifebar--p1"><span class="lifebar__fill"></span><span class="lifebar__tag">1P</span></div>
+        <span class="intro__timer">99</span>
+        <div class="lifebar lifebar--p2"><span class="lifebar__fill"></span><span class="lifebar__tag">2P</span></div>
+      </div>
+
+      <div class="intro__calls">
+        <p class="call call--round" aria-hidden="true">
+          <span class="call__small">Round</span>
+          <span class="call__big">One</span>
+        </p>
+        <p class="call call--fight" aria-hidden="true">Fight!</p>
+        <p class="visually-hidden" id="intro-announcer" aria-live="polite"></p>
+      </div>
+
+      <div class="intro__controls">
+        <button class="intro__replay" type="button" data-action="replay">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5V1L7 6l5 5V7a6 6 0 1 1-6 6H4a8 8 0 1 0 8-8z"/></svg>
+          Replay the opening
+        </button>
+        <span class="intro__scroll" aria-hidden="true"><span>Scroll</span><i></i></span>
+      </div>
+    </section>
+
+    <!-- ─────────────── 2 · Identity ─────────────── -->
+    <section class="identity" id="identity" aria-label="Street Fighter title">
+      <div class="identity__stage">
+        <div class="identity__aperture">
+          <video class="identity__video" muted playsinline preload="none" data-video="logo"
+                 poster="/media/poster/logo.jpg" aria-label="The Street Fighter logo forming in fire"></video>
+        </div>
+        <span class="identity__slit" aria-hidden="true"></span>
+        <p class="identity__release" data-release-line>Only in theatres 2026</p>
+      </div>
+      <div class="torn torn--bottom" data-torn="bottom" data-torn-fill="paper" data-torn-seed="4"></div>
+    </section>
+
+    <!-- ─────────────── 3 · DHAILSM reveal ─────────────── -->
+    <section class="reveal" id="dhailsm" aria-labelledby="reveal-name">
+      <div class="reveal__stage">
+        <img class="reveal__brush" src="/media/texture/brush-red.png" alt="" width="1800" height="360" />
+        <h2 class="reveal__name" id="reveal-name" data-hero-name data-split-letters>DHAILSM</h2>
+        <figure class="reveal__figure">
+          <div class="reveal__ink" aria-hidden="true"></div>
+          <img class="reveal__img" src="/media/img/dhailsm-live-action.jpg" width="736" height="920" decoding="async"
+               alt="DHAILSM, played by Vidyut Jammwal: bald head painted with red stripes, bone necklace and bangles, crouched in a fighting stance" />
+        </figure>
+        <div class="reveal__meta">
+          <p class="reveal__player"><span class="chip chip--gold">1P</span> Selected first</p>
+          <p class="reveal__credit">Played by <strong>Vidyut Jammwal</strong></p>
+          <p class="reveal__release" data-release-line>Only in theatres 2026</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─────────────── 4 · On screen, in game ─────────────── -->
+    <section class="forms" id="forms" aria-labelledby="forms-title">
+      <h2 class="visually-hidden" id="forms-title"><span data-hero-name>DHAILSM</span> on screen and in the game</h2>
+      <div class="forms__stage" id="forms-stage" style="--split: 50%">
+        <div class="forms__layer forms__layer--screen">
+          <span class="forms__word forms__word--left">On screen</span>
+          <span class="forms__word forms__word--right">In game</span>
+          <img class="forms__img" src="/media/img/dhailsm-live-action.jpg" width="736" height="920" loading="lazy" decoding="async"
+               alt="Live-action DHAILSM, played by Vidyut Jammwal" />
+          <p class="forms__note forms__note--left">Played by Vidyut Jammwal</p>
+        </div>
+        <div class="forms__layer forms__layer--game" aria-hidden="false">
+          <span class="forms__word forms__word--left">On screen</span>
+          <span class="forms__word forms__word--right">In game</span>
+          <img class="forms__img forms__img--game" src="/media/img/dhailsm-game-art.jpg" width="955" height="1350" loading="lazy" decoding="async"
+               alt="Game art of DHAILSM breathing fire, white-bearded, wrapped arms and gold bangles, floating in smoke" />
+          <p class="forms__note forms__note--right">Game art</p>
+        </div>
+        <div class="forms__handle" aria-hidden="true">
+          <span class="forms__grip">
+            <svg viewBox="0 0 24 24"><path d="M9 6l-6 6 6 6M15 6l6 6-6 6"/></svg>
+          </span>
+        </div>
+        <label class="visually-hidden" for="forms-range">Compare live action and game art</label>
+        <input class="forms__range" id="forms-range" type="range" min="0" max="100" step="1" value="50" />
+      </div>
+      <p class="forms__hint" aria-hidden="true">Drag to compare</p>
+    </section>
+
+    <!-- ─────────────── 5 · Temple (main cinematic, D0823654) ─────────────── -->
+    <section class="temple" id="temple" aria-labelledby="temple-title">
+      <div class="torn torn--top" data-torn="top" data-torn-fill="black" data-torn-seed="9"></div>
+      <div class="temple__stage">
+        <div class="temple__window">
+          <video class="temple__video" playsinline preload="none" data-video="temple" poster="/media/poster/temple.jpg"
+                 aria-label="Game cinematic: a golden deity statue, DHAILSM meditating by candlelight, a close-up as his eyes ignite, a burst of fire on the word Yoga, and DHAILSM levitating before an elephant inside a gold mandala"></video>
+          <div class="temple__shade" aria-hidden="true"></div>
+        </div>
+        <h2 class="visually-hidden" id="temple-title"><span data-hero-name>DHAILSM</span> in the temple</h2>
+
+        <div class="temple__kinetic" aria-hidden="true">
+          <div class="k-track"><span class="k-track__rule"></span><span class="k-track__name" data-hero-name>DHAILSM</span><span class="k-track__rule"></span></div>
+          <div class="k-slam"><span class="k-slam__line k-slam__line--outline" data-hero-name data-k-letters>DHAILSM</span><span class="k-slam__line k-slam__line--fill" data-hero-name data-k-letters>DHAILSM</span></div>
+          <div class="k-yoga" data-k-letters>Yoga!</div>
+          <div class="k-embers"></div>
+          <svg class="k-ring" viewBox="0 0 400 400">
+            <circle class="k-ring__c k-ring__c--outer" cx="200" cy="200" r="190" />
+            <circle class="k-ring__c k-ring__c--inner" cx="200" cy="200" r="158" />
+            <circle class="k-ring__c k-ring__c--red" cx="200" cy="200" r="214" />
+            <g class="k-ring__ticks"></g>
+          </svg>
+          <div class="k-sign">
+            <span class="chip chip--gold k-sign__chip">1P</span>
+            <span class="k-sign__name" data-hero-name data-k-letters>DHAILSM</span>
+            <span class="k-sign__rule"></span>
+          </div>
+          <div class="k-flash"></div>
+        </div>
+
+        <div class="temple__bars" aria-hidden="true"><span class="temple__bar temple__bar--top"></span><span class="temple__bar temple__bar--bottom"></span></div>
+
+        <div class="temple__hud">
+          <span class="temple__label">Temple</span>
+          <span class="temple__progress" aria-hidden="true"><i></i></span>
+          <span class="temple__time" aria-hidden="true">0:00 / 0:07</span>
+          <button class="temple__replay" type="button">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5V1L7 6l5 5V7a6 6 0 1 1-6 6H4a8 8 0 1 0 8-8z"/></svg>
+            <span class="temple__replay-label">Replay</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─────────────── 6 · In motion (reel) ─────────────── -->
+    <section class="reel" id="reel" aria-labelledby="reel-title">
+      <div class="reel__pin">
+        <div class="reel__track" id="reel-track">
+          <header class="reel__intro">
+            <h2 class="reel__title" id="reel-title">In motion</h2>
+            <p class="reel__lede">Two more cinematics and three frames pulled from the footage. Open any of them full screen, with sound.</p>
+          </header>
+
+          <figure class="reel__item reel__item--wide reel__item--high">
+            <button class="reel__open" type="button" data-lightbox data-kind="video" data-name="meditation" data-title="Meditation" aria-label="Watch Meditation full screen">
+              <video class="reel__media" muted loop playsinline preload="none" data-video="meditation" poster="/media/poster/meditation.jpg" aria-hidden="true"></video>
+            </button>
+            <figcaption class="reel__cap"><span class="reel__name">Meditation</span><span class="reel__meta">0:05</span></figcaption>
+          </figure>
+
+          <figure class="reel__item reel__item--tall">
+            <button class="reel__open" type="button" data-lightbox data-kind="video" data-name="yoga" data-title="Yoga" aria-label="Watch Yoga full screen">
+              <video class="reel__media" muted loop playsinline preload="none" data-video="yoga" poster="/media/poster/yoga.jpg" aria-hidden="true"></video>
+            </button>
+            <figcaption class="reel__cap"><span class="reel__name">Yoga</span><span class="reel__meta">0:10</span></figcaption>
+          </figure>
+
+          <figure class="reel__item reel__item--mid reel__item--low">
+            <button class="reel__open" type="button" data-lightbox data-kind="image" data-src="/media/poster/still-gaze.jpg" data-title="Close-up" aria-label="View Close-up full screen">
+              <img class="reel__media" src="/media/poster/still-gaze.jpg" width="1920" height="1090" loading="lazy" decoding="async"
+                   alt="Extreme close-up of DHAILSM's face in the game cinematic: glowing white eyes, hoop earrings, grey beard" />
+            </button>
+            <figcaption class="reel__cap"><span class="reel__name">Close-up</span><span class="reel__meta">Frame</span></figcaption>
+          </figure>
+
+          <figure class="reel__item reel__item--mid reel__item--high">
+            <button class="reel__open" type="button" data-lightbox data-kind="image" data-src="/media/poster/still-mandala.jpg" data-title="Mandala" aria-label="View Mandala full screen">
+              <img class="reel__media" src="/media/poster/still-mandala.jpg" width="1920" height="1090" loading="lazy" decoding="async"
+                   alt="DHAILSM meditating at the centre of a glowing gold mandala, flanked by an armoured elephant" />
+            </button>
+            <figcaption class="reel__cap"><span class="reel__name">Mandala</span><span class="reel__meta">Frame</span></figcaption>
+          </figure>
+
+          <figure class="reel__item reel__item--cinema reel__item--low">
+            <button class="reel__open" type="button" data-lightbox data-kind="image" data-src="/media/poster/still-neon.jpg" data-title="Neon" aria-label="View Neon full screen">
+              <img class="reel__media" src="/media/poster/still-neon.jpg" width="1920" height="878" loading="lazy" decoding="async"
+                   alt="Live-action DHAILSM in a fighting stance under pink and blue neon light" />
+            </button>
+            <figcaption class="reel__cap"><span class="reel__name">Neon</span><span class="reel__meta">Frame</span></figcaption>
+          </figure>
+        </div>
+      </div>
+      <div class="torn torn--bottom" data-torn="bottom" data-torn-fill="paper" data-torn-seed="15"></div>
+    </section>
+
+    <!-- ─────────────── 6 · Versus ─────────────── -->
+    <section class="versus" id="versus" aria-labelledby="versus-title">
+      <svg class="versus__band" aria-hidden="true" preserveAspectRatio="none" viewBox="0 0 1000 1000"><path data-ink-band /></svg>
+      <h2 class="versus__title" id="versus-title">Choose your opponent</h2>
+
+      <div class="versus__stage">
+        <figure class="fighter fighter--p1">
+          <div class="fighter__frame">
+            <img class="fighter__img" src="/media/img/dhailsm-live-action.jpg" width="736" height="920" loading="lazy" decoding="async"
+                 alt="DHAILSM, played by Vidyut Jammwal" />
+          </div>
+          <figcaption class="fighter__cap">
+            <span class="chip chip--gold">1P</span>
+            <span class="fighter__name" data-hero-name>DHAILSM</span>
+            <span class="fighter__actor">Vidyut Jammwal</span>
+          </figcaption>
+        </figure>
+
+        <div class="versus__vs" aria-hidden="true"><span>V</span><span>S</span></div>
+
+        <figure class="fighter fighter--p2" id="opponent">
+          <div class="fighter__frame">
+            <img class="fighter__img" id="opponent-img" src="/media/img/ken.jpg" width="735" height="913" loading="lazy" decoding="async" alt="Ken, played by Noah Centineo" />
+          </div>
+          <figcaption class="fighter__cap">
+            <span class="chip chip--red">2P</span>
+            <span class="fighter__name" id="opponent-name">Ken</span>
+            <span class="fighter__actor" id="opponent-actor">Noah Centineo</span>
+          </figcaption>
+        </figure>
+      </div>
+
+      <div class="roster" id="roster" role="radiogroup" aria-label="Opponent"></div>
+      <p class="visually-hidden" id="versus-status" aria-live="polite"></p>
+    </section>
+
+    <!-- ─────────────── 7 · Finale ─────────────── -->
+    <section class="finale" id="finale" aria-labelledby="finale-name">
+      <div class="torn torn--top" data-torn="top" data-torn-fill="black" data-torn-seed="21"></div>
+      <div class="finale__stage">
+        <video class="finale__video" muted playsinline preload="none" data-video="radiance" poster="/media/poster/radiance.jpg"
+               aria-label="DHAILSM rising through golden light in a multi-armed radiant form, flanked by elephant tusks"></video>
+        <div class="finale__shade" aria-hidden="true"></div>
+        <div class="finale__type">
+          <h2 class="finale__name" id="finale-name" data-hero-name data-split-letters>DHAILSM</h2>
+          <p class="finale__release">Street Fighter. <span data-release-line>Only in theatres 2026</span>.</p>
+        </div>
+        <div class="finale__bars" aria-hidden="true"><span class="finale__bar finale__bar--top"></span><span class="finale__bar finale__bar--bottom"></span><span class="finale__seam"></span></div>
+      </div>
+
+      <div class="continue" id="continue">
+        <p class="continue__label" id="continue-label">Continue?</p>
+        <p class="continue__count" id="continue-count" aria-hidden="true">9</p>
+        <div class="continue__actions">
+          <button class="btn btn--red" type="button" data-action="replay">Replay the opening</button>
+          <button class="btn btn--ghost" type="button" data-scroll-to="dhailsm"><span>Meet <span data-hero-name>DHAILSM</span> again</span></button>
+        </div>
+        <p class="credits">A fan-made experience built from the supplied posters and footage. Street Fighter, its characters, artwork and footage belong to their respective owners.</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- ─────────────── Media viewer ─────────────── -->
+  <dialog class="viewer" id="viewer" aria-labelledby="viewer-title">
+    <div class="viewer__media" id="viewer-media"></div>
+    <div class="viewer__bar">
+      <p class="viewer__title" id="viewer-title"></p>
+      <div class="viewer__nav">
+        <button class="viewer__btn" type="button" data-viewer="prev" aria-label="Previous">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+        </button>
+        <span class="viewer__count" id="viewer-count"></span>
+        <button class="viewer__btn" type="button" data-viewer="next" aria-label="Next">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+      <button class="viewer__close" type="button" data-viewer="close">Close</button>
+    </div>
+  </dialog>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

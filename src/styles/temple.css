@@ -1,0 +1,127 @@
+/* ═══════════ 5 · Temple: the main cinematic with kinetic type ═══════════ */
+.temple {
+  position: relative;
+  background-color: var(--black);
+  background-image: var(--tex-grain);
+  background-size: 256px;
+}
+.temple__stage { position: relative; height: 100svh; min-height: 560px; overflow: hidden; isolation: isolate; }
+.temple__window { position: absolute; inset: 0; will-change: clip-path; }
+.temple__video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 45%; }
+.temple__shade {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 80% 70% at 50% 50%, transparent 55%, rgb(0 0 0 / 0.55) 100%),
+    linear-gradient(0deg, rgb(0 0 0 / 0.55) 0%, transparent 32%);
+}
+
+/* Letterbox bars: the footage arrived letterboxed, so the main cinematic gets bars back */
+.temple__bars { position: absolute; inset: 0; pointer-events: none; z-index: 3; }
+.temple__bar { position: absolute; left: 0; right: 0; height: 9svh; background: var(--black); transform: scaleY(0); }
+.temple__bar--top { top: 0; transform-origin: top; }
+.temple__bar--bottom { bottom: 0; transform-origin: bottom; }
+
+/* Kinetic layer: every element is driven by the video's own playhead (temple.js) */
+.temple__kinetic { position: absolute; inset: 0; z-index: 2; pointer-events: none; overflow: hidden; }
+.temple__kinetic .ltr, .k-ch { display: inline-block; will-change: transform, opacity; }
+
+.k-track {
+  position: absolute; left: 0; right: 0; bottom: 21svh;
+  display: flex; align-items: center; justify-content: center; gap: 2vw;
+  opacity: 0;
+}
+.k-track__name {
+  font-family: var(--font-display); font-size: clamp(2rem, 4.2vw, 4.5rem); line-height: 1;
+  color: var(--gold-pale); text-transform: uppercase; letter-spacing: 0.14em;
+  text-shadow: 0 4px 24px rgb(0 0 0 / 0.7);
+}
+.k-track__rule { width: 12vw; height: 2px; background: linear-gradient(90deg, transparent, var(--gold)); transform-origin: right; }
+.k-track__rule:last-child { background: linear-gradient(90deg, var(--gold), transparent); transform-origin: left; }
+
+.k-slam { position: absolute; inset: 0; display: grid; place-items: center; }
+.k-slam__line {
+  grid-area: 1 / 1;
+  font-family: var(--font-display); font-size: min(25vw, 46svh); line-height: 0.8;
+  text-transform: uppercase; white-space: nowrap;
+}
+.k-slam__line--outline { color: transparent; -webkit-text-stroke: 3px var(--gold-pale); filter: drop-shadow(0 0 18px rgb(214 162 60 / 0.55)); }
+.k-slam__line--fill { clip-path: inset(100% 0 0 0); }
+.k-slam__line--fill .k-ch {
+  background: linear-gradient(180deg, var(--gold-pale) 8%, var(--gold) 50%, var(--gold-deep) 96%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.k-slam .k-ch { opacity: 0; }
+
+.k-yoga {
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display); font-size: min(28vw, 50svh); line-height: 0.8;
+  text-transform: uppercase; white-space: nowrap;
+  color: var(--red); -webkit-text-stroke: 0.018em var(--gold-pale);
+  filter: drop-shadow(0.035em 0.035em 0 var(--black));
+}
+.k-yoga .k-ch { opacity: 0; transform-origin: 50% 70%; }
+
+.k-embers { position: absolute; left: 50%; top: 55%; width: 0; height: 0; }
+.k-embers i {
+  position: absolute; left: -4px; top: -4px; width: 8px; height: 8px; border-radius: 50%;
+  background: radial-gradient(circle, #fff3c4 0%, #ffb02e 45%, rgb(216 19 27 / 0) 72%);
+  opacity: 0;
+}
+
+.k-ring {
+  position: absolute; left: 50%; top: 58%;
+  width: min(54svh, 46vw); height: auto; margin: calc(min(54svh, 46vw) / -2) 0 0 calc(min(54svh, 46vw) / -2);
+  overflow: visible; opacity: 0;
+}
+.k-ring__c { fill: none; stroke: #fff6da; stroke-width: 4; filter: drop-shadow(0 0 6px rgb(255 214 120 / 0.95)) drop-shadow(0 0 18px rgb(214 162 60 / 0.8)); }
+.k-ring__c--inner { stroke: var(--gold-pale); stroke-width: 3; stroke-dasharray: 10 14; }
+.k-ring__c--red { stroke: var(--red); stroke-width: 3; stroke-dasharray: 2 18; filter: drop-shadow(0 0 8px rgb(216 19 27 / 0.9)); }
+.k-ring__ticks line { stroke: #fff6da; stroke-width: 4; stroke-linecap: round; filter: drop-shadow(0 0 6px rgb(255 214 120 / 0.9)); }
+
+.k-sign {
+  position: absolute; left: var(--gutter); bottom: calc(9svh + 64px);
+  display: grid; justify-items: start; gap: 8px;
+}
+.k-sign__name {
+  display: block; overflow: hidden;
+  font-family: var(--font-display); font-size: clamp(3rem, 7.4vw, 8rem); line-height: 0.86;
+  text-transform: uppercase; color: var(--white);
+  text-shadow: 0 6px 30px rgb(0 0 0 / 0.6);
+}
+.k-sign__rule { width: 100%; height: 3px; background: linear-gradient(90deg, var(--gold), var(--gold-pale), transparent); transform-origin: left; transform: scaleX(0); }
+.k-sign__chip { opacity: 0; }
+
+.k-flash { position: absolute; inset: 0; background: var(--white); opacity: 0; mix-blend-mode: screen; }
+
+/* Player HUD inside the bottom bar: what the cinematic is, where it is, replay */
+.temple__hud {
+  position: absolute; z-index: 4; left: var(--gutter); right: var(--gutter); bottom: 0; height: 9svh;
+  display: flex; align-items: center; gap: clamp(12px, 2vw, 24px);
+  font-family: var(--font-ui); font-weight: 600; font-size: 0.9375rem; color: var(--gold-pale);
+  opacity: 0;
+}
+.temple__label { font-family: var(--font-display); font-weight: 400; font-size: 1.15rem; text-transform: uppercase; color: var(--white); }
+.temple__progress { position: relative; flex: 1; height: 2px; background: rgb(255 255 255 / 0.18); overflow: hidden; }
+.temple__progress i { position: absolute; inset: 0; background: var(--gold); transform-origin: left; transform: scaleX(0); }
+.temple__time { font-variant-numeric: tabular-nums; min-width: 6.5em; text-align: right; }
+.temple__replay {
+  display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 4px;
+  color: var(--gold-pale); transition: color 0.2s;
+}
+.temple__replay svg { width: 18px; fill: currentColor; }
+.temple__replay:hover { color: var(--white); }
+
+@media (max-width: 899px) {
+  .temple__video { object-position: 48% 50%; }
+  .k-track { bottom: 26svh; }
+  .k-track__rule { width: 8vw; }
+  .k-slam__line { font-size: 27vw; }
+  .k-slam__line--outline { -webkit-text-stroke-width: 2px; }
+  .k-yoga { font-size: 34vw; }
+  .k-ring { width: 78vw; margin: -39vw 0 0 -39vw; top: 54%; }
+  .k-sign { bottom: calc(9svh + 40px); }
+  .k-sign__name { font-size: 15vw; }
+  .temple__label { display: none; }
+  .temple__time { min-width: 0; }
+  .temple__replay-label { display: none; }
+}

@@ -1,0 +1,139 @@
+/* ── Tokens ───────────────────────────────────────────────
+   Red: impact and interaction. Gold: fine detail and premium accents.
+   Black and concrete paper alternate as the two grounds, as in the references. */
+:root {
+  --black: #000;
+  --paper: #dedcd7;          /* sampled from the poster backgrounds */
+  --paper-shade: #c8c5bf;
+  --white: #fff;
+  --red: #d8131b;
+  --red-deep: #8f0e12;
+  --gold: #d6a23c;
+  --gold-deep: #996c08;      /* sampled from the game art */
+  --gold-pale: #f2d898;
+
+  --font-display: 'Anton', Impact, 'Arial Narrow Bold', sans-serif;
+  --font-ui: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+  --font-body: 'Barlow', system-ui, sans-serif;
+
+  /* Type scale: modular 1.333 from a 17px body, display sizes fluid */
+  --step--1: 0.8125rem;
+  --step-0: 1.0625rem;
+  --step-1: 1.4rem;
+  --step-2: 1.875rem;
+  --step-3: clamp(2.25rem, 4vw, 3.5rem);
+  --step-4: clamp(3rem, 8vw, 7.5rem);
+  --step-5: clamp(4.5rem, 14vw, 13rem);
+
+  --gutter: clamp(16px, 4vw, 56px);
+  --topbar-h: 64px;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-slam: cubic-bezier(0.2, 1.4, 0.4, 1);
+
+  --tex-concrete: url('/media/texture/concrete.jpg');
+  --tex-grain: url('/media/texture/grain.png');
+}
+
+/* ── Reset ─────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; background: var(--black); }
+body {
+  margin: 0;
+  min-height: 100svh;
+  background: var(--black);
+  color: var(--white);
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: clip;
+}
+body.is-locked { overflow: hidden; }
+img, video, svg { display: block; max-width: 100%; }
+button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+h1, h2, h3, p, figure, ol, ul { margin: 0; padding: 0; }
+ol, ul { list-style: none; }
+a { color: inherit; }
+
+:focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; }
+
+.visually-hidden {
+  position: absolute !important; width: 1px; height: 1px; margin: -1px; padding: 0;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+.skip-link {
+  position: fixed; top: 12px; left: 12px; z-index: 1000;
+  padding: 10px 16px; background: var(--gold); color: var(--black);
+  font-family: var(--font-ui); font-weight: 600; text-decoration: none;
+  transform: translateY(-150%);
+}
+.skip-link:focus { transform: none; }
+
+/* ── Grounds ───────────────────────────────────────────── */
+.ground-paper {
+  background-color: var(--paper);
+  background-image: var(--tex-concrete);
+  background-size: 640px;
+  color: var(--black);
+}
+.ground-black {
+  background-color: var(--black);
+  background-image: var(--tex-grain);
+  background-size: 256px;
+  background-blend-mode: normal;
+}
+
+/* Torn edges between grounds (masks are generated in shapes.js).
+   bottom: the next ground rising inside this section's lower edge.
+   top: this section's ground reaching up over the previous section. */
+.torn {
+  position: absolute; left: 0; right: 0; z-index: 4;
+  height: clamp(28px, 5vw, 72px);
+  pointer-events: none;
+}
+.torn svg { width: 100%; height: 100%; display: block; }
+.torn--bottom { bottom: -1px; }
+.torn--top { bottom: calc(100% - 1px); }
+
+/* ── Shared atoms ──────────────────────────────────────── */
+.chip {
+  display: inline-grid; place-items: center;
+  min-width: 2.4em; height: 1.6em; padding: 0 0.4em;
+  font-family: var(--font-display); font-size: 0.95rem; line-height: 1;
+  transform: skewX(-12deg);
+}
+.chip--gold { background: var(--gold); color: var(--black); }
+.chip--red { background: var(--red); color: var(--white); }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  min-height: 52px; padding: 0 28px;
+  font-family: var(--font-ui); font-weight: 600; font-size: 1.125rem; letter-spacing: 0.02em;
+  clip-path: polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%);
+  transition: background-color 0.2s, color 0.2s, transform 0.2s var(--ease-out);
+}
+.btn--red { background: var(--red); color: var(--white); }
+.btn--red:hover { background: var(--white); color: var(--red); }
+.btn--ghost { background: transparent; color: var(--gold); box-shadow: inset 0 0 0 1px var(--gold); clip-path: none; }
+.btn--ghost:hover { background: var(--gold); color: var(--black); }
+.btn:active { transform: scale(0.97); }
+
+/* Sound toggle: four bars that animate while sound is on */
+.sound-toggle {
+  display: inline-flex; align-items: center; gap: 10px;
+  min-height: 44px; padding: 0 6px;
+  font-family: var(--font-ui); font-weight: 500; font-size: 1rem; letter-spacing: 0.02em;
+}
+.sound-toggle__icon { display: inline-flex; align-items: flex-end; gap: 2px; height: 14px; }
+.sound-toggle__icon i { width: 3px; height: 100%; background: currentColor; transform-origin: bottom; transform: scaleY(0.25); }
+.sound-toggle[aria-pressed='true'] .sound-toggle__icon i { animation: eq 0.9s ease-in-out infinite alternate; }
+.sound-toggle[aria-pressed='true'] .sound-toggle__icon i:nth-child(2) { animation-delay: -0.3s; }
+.sound-toggle[aria-pressed='true'] .sound-toggle__icon i:nth-child(3) { animation-delay: -0.6s; }
+.sound-toggle[aria-pressed='true'] .sound-toggle__icon i:nth-child(4) { animation-delay: -0.15s; }
+@keyframes eq { from { transform: scaleY(0.25); } to { transform: scaleY(1); } }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+}
