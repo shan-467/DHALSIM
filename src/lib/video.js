@@ -5,7 +5,7 @@ import { media } from './dom.js';
 export function sourceFor(name) {
   const v = VIDEOS[name];
   const width = media.desktop.matches ? v.desktop : v.mobile;
-  return `/media/video/${name}-${width}.mp4`;
+  return `${import.meta.env.BASE_URL}media/video/${name}-${width}.mp4`;
 }
 
 /** Assigns the source on first need, so below-the-fold video costs nothing until it is close. */
